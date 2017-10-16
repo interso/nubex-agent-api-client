@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\ServerException;
 
 class Client
 {
-
     const METHOD_GET = 'GET';
 
     const METHOD_POST = 'POST';
@@ -37,14 +36,18 @@ class Client
      */
     protected $httpOptions = [];
 
-
+    /**
+     * Client constructor.
+     * @param $baseUrl
+     * @param $apiKey
+     * @param ClientInterface $httpClient
+     */
     public function __construct($baseUrl, $apiKey, ClientInterface $httpClient)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
     }
-
 
     /**
      * @return array
@@ -54,7 +57,6 @@ class Client
         return $this->httpOptions;
     }
 
-
     /**
      * @param array $options
      */
@@ -62,7 +64,6 @@ class Client
     {
         $this->httpOptions = $options;
     }
-
 
     /**
      * @param string $name
@@ -73,7 +74,6 @@ class Client
         $this->httpOptions[$name] = $value;
     }
 
-
     /**
      * Prepares URI for the request.
      *
@@ -83,15 +83,14 @@ class Client
      */
     public function prepareUri($endpoint)
     {
-        return $this->baseUrl.'/'.$endpoint;
+        return $this->baseUrl . '/' . $endpoint;
     }
-
 
     /**
      * Requests API.
      *
      * @param        $uri
-     * @param array  $params
+     * @param array $params
      * @param string $method
      *
      * @return array|mixed
@@ -102,8 +101,8 @@ class Client
     {
         $headers = [
             'Content-Type' => 'application/json',
-            'Accept'       => 'application/json',
-            'Api-Key'      => $this->apiKey,
+            'Accept' => 'application/json',
+            'Api-Key' => $this->apiKey,
         ];
 
         $request = new Request($method, $uri, $headers, 0 < count($params) ? json_encode($params) : null);
@@ -125,12 +124,11 @@ class Client
         $result = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('Error parsing response: '.json_last_error_msg().'Body: '.$body);
+            throw new \RuntimeException('Error parsing response: ' . json_last_error_msg() . 'Body: ' . $body);
         }
 
         return $result;
     }
-
 
     /**
      * @param       $endpoint
@@ -145,7 +143,6 @@ class Client
         return $this->query($this->prepareUri($endpoint), $params, self::METHOD_GET);
     }
 
-
     /**
      * @param       $endpoint
      * @param array $params
@@ -158,7 +155,6 @@ class Client
     {
         return $this->query($this->prepareUri($endpoint), $params, self::METHOD_POST);
     }
-
 
     /**
      * @param       $endpoint
@@ -173,7 +169,6 @@ class Client
         return $this->query($this->prepareUri($endpoint), $params, self::METHOD_PUT);
     }
 
-
     /**
      * @param       $endpoint
      * @param array $params
@@ -186,5 +181,4 @@ class Client
     {
         return $this->query($this->prepareUri($endpoint), $params, self::METHOD_DELETE);
     }
-
 }
