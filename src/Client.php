@@ -1,6 +1,6 @@
 <?php
 
-namespace Interso\NubexPrototypeAPI;
+namespace Interso\NubexAgentAPI;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
