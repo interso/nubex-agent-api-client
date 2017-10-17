@@ -3,11 +3,11 @@
 namespace Interso\Tests\Commands;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\Commands\PrototypeCommands;
+use Interso\NubexAgentAPI\Command\PrototypeCommand;
 use Interso\NubexAgentAPI\DTO\PrototypeDTO;
 use PHPUnit\Framework\TestCase;
 
-class PrototypeCommandsTest extends TestCase
+class PrototypeCommandTest extends TestCase
 {
     /**
      * @var Client
@@ -15,16 +15,16 @@ class PrototypeCommandsTest extends TestCase
     protected $client;
 
     /**
-     * @var PrototypeCommands
+     * @var PrototypeCommand
      */
-    protected $protoCommands;
+    protected $protoCommand;
 
     /**
      * Tear down settings
      */
     protected function tearDown()
     {
-        $this->protoCommands = NULL;
+        $this->protoCommand = NULL;
     }
 
     /**
@@ -43,7 +43,7 @@ class PrototypeCommandsTest extends TestCase
             ->method('get')
             ->will($this->returnValue($data));
 
-        $this->protoCommands = new PrototypeCommands($this->client);
+        $this->protoCommand = new PrototypeCommand($this->client);
     }
 
     public function testGetList()
@@ -53,11 +53,11 @@ class PrototypeCommandsTest extends TestCase
         $dto->setCode(2);
         $dto->setSite(1);
 
-        $this->assertEquals($dto, $this->protoCommands->getList());
+        $this->assertEquals($dto, $this->protoCommand->getList());
     }
 
     public function testGetListType()
     {
-        $this->assertInstanceOf(PrototypeDTO::class, $this->protoCommands->getList());
+        $this->assertInstanceOf(PrototypeDTO::class, $this->protoCommand->getList());
     }
 }

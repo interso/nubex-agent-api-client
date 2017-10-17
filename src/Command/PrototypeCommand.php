@@ -1,12 +1,11 @@
 <?php
 
-namespace Interso\NubexAgentAPI\Commands;
+namespace Interso\NubexAgentAPI\Command;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\DTO\PrototypeDTO;
 use Interso\NubexAgentAPI\Transformer\PrototypeTransformer;
 
-class PrototypeCommands
+class PrototypeCommand
 {
     /**
      * @var Client
@@ -14,7 +13,7 @@ class PrototypeCommands
     private $client;
 
     /**
-     * PrototypeCommands constructor.
+     * PrototypeCommand constructor.
      *
      * @param Client $client
      */

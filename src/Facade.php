@@ -3,8 +3,8 @@
 namespace Interso\NubexAgentAPI;
 
 use GuzzleHttp\Client as HttpClient;
-use Interso\NubexAgentAPI\Commands\PrototypeCommands;
-use Interso\NubexAgentAPI\Commands\SiteCommands;
+use Interso\NubexAgentAPI\Command\PrototypeCommand;
+use Interso\NubexAgentAPI\Command\SiteCommand;
 
 class Facade
 {
@@ -24,14 +24,14 @@ class Facade
     protected $client;
 
     /**
-     * @var SiteCommands
+     * @var SiteCommand
      */
-    protected $siteCommands;
+    protected $siteCommand;
 
     /**
-     * @var PrototypeCommands
+     * @var PrototypeCommand
      */
-    protected $prototypeCommands;
+    protected $prototypeCommand;
 
     /**
      * Facade constructor.
@@ -44,23 +44,23 @@ class Facade
         $httpClient = new HttpClient();
         $client = new Client($apiUrl, $apiKey, $httpClient);
 
-        $this->siteCommands      = new SiteCommands($client);
-        $this->prototypeCommands = new PrototypeCommands($client);
+        $this->siteCommand      = new SiteCommand($client);
+        $this->prototypeCommand = new PrototypeCommand($client);
     }
 
     /**
-     * @return SiteCommands
+     * @return SiteCommand
      */
     public function sites()
     {
-        return $this->siteCommands;
+        return $this->siteCommand;
     }
 
     /**
-     * @return PrototypeCommands
+     * @return PrototypeCommand
      */
     public function prototypes()
     {
-        return $this->prototypeCommands;
+        return $this->prototypeCommand;
     }
 }

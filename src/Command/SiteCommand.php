@@ -1,11 +1,11 @@
 <?php
 
-namespace Interso\NubexAgentAPI\Commands;
+namespace Interso\NubexAgentAPI\Command;
 
 use Interso\NubexAgentAPI\Client;
 use Interso\NubexAgentAPI\Transformer\SiteTransformer;
 
-class SiteCommands
+class SiteCommand
 {
     /**
      * @var Client
@@ -13,7 +13,7 @@ class SiteCommands
     private $client;
 
     /**
-     * SiteCommands constructor.
+     * SiteCommand constructor.
      *
      * @param Client $client
      */

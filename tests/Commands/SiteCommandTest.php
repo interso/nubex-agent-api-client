@@ -3,11 +3,11 @@
 namespace Interso\Tests\Commands;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\Commands\SiteCommands;
+use Interso\NubexAgentAPI\Command\SiteCommand;
 use Interso\NubexAgentAPI\DTO\SiteDTO;
 use PHPUnit\Framework\TestCase;
 
-class SiteCommandsTest extends TestCase
+class SiteCommandTest extends TestCase
 {
     /**
      * @var Client
@@ -15,16 +15,16 @@ class SiteCommandsTest extends TestCase
     protected $client;
 
     /**
-     * @var SiteCommands
+     * @var SiteCommand
      */
-    protected $siteCommands;
+    protected $siteCommand;
 
     /**
      * Tear down settings
      */
     protected function tearDown()
     {
-        $this->siteCommands = NULL;
+        $this->siteCommand = NULL;
     }
 
     /**
@@ -43,7 +43,7 @@ class SiteCommandsTest extends TestCase
             ->method('get')
             ->will($this->returnValue($data));
 
-        $this->siteCommands = new SiteCommands($this->client);
+        $this->siteCommand = new SiteCommand($this->client);
     }
 
     public function testGetList()
@@ -53,11 +53,11 @@ class SiteCommandsTest extends TestCase
         $dto->setCode(2);
         $dto->setPrototype(3);
 
-        $this->assertEquals($dto, $this->siteCommands->getList());
+        $this->assertEquals($dto, $this->siteCommand->getList());
     }
 
     public function testGetListType()
     {
-        $this->assertInstanceOf(SiteDTO::class, $this->siteCommands->getList());
+        $this->assertInstanceOf(SiteDTO::class, $this->siteCommand->getList());
     }
 }
