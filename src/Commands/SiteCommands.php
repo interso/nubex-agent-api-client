@@ -3,7 +3,7 @@
 namespace Interso\NubexAgentAPI\Commands;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\DTO\SiteDTO;
+use Interso\NubexAgentAPI\Transformer\SiteTransformer;
 
 class SiteCommands
 {
@@ -24,18 +24,8 @@ class SiteCommands
 
     public function getList()
     {
+        $t = new SiteTransformer();
         $data = $this->client->get('sites');
-        return !is_array($data) ? [] : $this->siteTransform($data);
-    }
-
-    protected function siteTransform($data)
-    {
-        $site = new SiteDTO();
-
-        $site->setId($data['id']);
-        $site->setCode($data['code']);
-        $site->setPrototype($data['prototype']);
-
-        return $site;
+        return !is_array($data) ? [] : $t->transform($data);
     }
 }

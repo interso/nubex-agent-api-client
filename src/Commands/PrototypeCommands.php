@@ -4,6 +4,7 @@ namespace Interso\NubexAgentAPI\Commands;
 
 use Interso\NubexAgentAPI\Client;
 use Interso\NubexAgentAPI\DTO\PrototypeDTO;
+use Interso\NubexAgentAPI\Transformer\PrototypeTransformer;
 
 class PrototypeCommands
 {
@@ -24,18 +25,8 @@ class PrototypeCommands
 
     public function getList()
     {
+        $t = new PrototypeTransformer();
         $data = $this->client->get('prototypes');
-        return !is_array($data) ? [] : $this->prototypeTransform($data);
-    }
-
-    protected function prototypeTransform($data)
-    {
-        $site = new PrototypeDTO();
-
-        $site->setId($data['id']);
-        $site->setCode($data['code']);
-        $site->setSite($data['site']);
-
-        return $site;
+        return !is_array($data) ? [] : $t->transform($data);
     }
 }
