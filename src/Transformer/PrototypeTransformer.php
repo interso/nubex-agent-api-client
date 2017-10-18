@@ -13,6 +13,7 @@ class PrototypeTransformer
         $proto->setId($data['id']);
         $proto->setCode($data['code']);
         $proto->setSite($data['site']);
+        $proto->setState($data['state']);
 
         return $proto;
     }

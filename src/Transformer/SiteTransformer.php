@@ -12,6 +12,7 @@ class SiteTransformer
 
         $site->setId($data['id']);
         $site->setCode($data['code']);
+        $site->setState($data['state']);
         $site->setPrototype($data['prototype']);
 
         return $site;

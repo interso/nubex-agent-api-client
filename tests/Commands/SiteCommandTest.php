@@ -32,10 +32,11 @@ class SiteCommandTest extends TestCase
      */
     protected function setUp()
     {
-        $data = [
+        $data['data'][0] = [
             'id'        => 1,
             'code'      => 2,
             'prototype' => 3,
+            'state'     => 'new',
         ];
 
         $this->client = $this->createMock(Client::class);
@@ -52,12 +53,13 @@ class SiteCommandTest extends TestCase
         $dto->setId(1);
         $dto->setCode(2);
         $dto->setPrototype(3);
+        $dto->setState('new');
 
-        $this->assertEquals($dto, $this->siteCommand->getList());
+        $this->assertEquals($dto, $this->siteCommand->getList()[0]);
     }
 
     public function testGetListType()
     {
-        $this->assertInstanceOf(SiteDTO::class, $this->siteCommand->getList());
+        $this->assertInstanceOf(SiteDTO::class, $this->siteCommand->getList()[0]);
     }
 }

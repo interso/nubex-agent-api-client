@@ -32,10 +32,11 @@ class PrototypeCommandTest extends TestCase
      */
     protected function setUp()
     {
-        $data = [
+        $data['data'][0] = [
             'id'   => 3,
             'code' => 2,
             'site' => 1,
+            'state' => 'new',
         ];
 
         $this->client = $this->createMock(Client::class);
@@ -52,12 +53,13 @@ class PrototypeCommandTest extends TestCase
         $dto->setId(3);
         $dto->setCode(2);
         $dto->setSite(1);
+        $dto->setState('new');
 
-        $this->assertEquals($dto, $this->protoCommand->getList());
+        $this->assertEquals($dto, $this->protoCommand->getList()[0]);
     }
 
     public function testGetListType()
     {
-        $this->assertInstanceOf(PrototypeDTO::class, $this->protoCommand->getList());
+        $this->assertInstanceOf(PrototypeDTO::class, $this->protoCommand->getList()[0]);
     }
 }

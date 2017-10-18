@@ -20,6 +20,11 @@ class SiteDTO
     private $prototype;
 
     /**
+     * @var string
+     */
+    private $state;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -65,5 +70,21 @@ class SiteDTO
     public function setPrototype($prototype)
     {
         $this->prototype = $prototype;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 }

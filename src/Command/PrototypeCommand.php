@@ -25,7 +25,14 @@ class PrototypeCommand
     public function getList()
     {
         $t = new PrototypeTransformer();
-        $data = $this->client->get('prototypes');
-        return !is_array($data) ? [] : $t->transform($data);
+
+        $data = $this->client->get('prototypes')['data'];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return array_map(function ($datum) use (&$t) {
+            return $t->transform($datum);
+        }, $data);
     }
 }

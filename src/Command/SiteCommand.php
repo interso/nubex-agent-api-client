@@ -25,7 +25,14 @@ class SiteCommand
     public function getList()
     {
         $t = new SiteTransformer();
-        $data = $this->client->get('sites');
-        return !is_array($data) ? [] : $t->transform($data);
+
+        $data = $this->client->get('sites')['data'];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return array_map(function ($datum) use (&$t) {
+            return $t->transform($datum);
+        }, $data);
     }
 }
