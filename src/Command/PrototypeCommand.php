@@ -22,10 +22,10 @@ class PrototypeCommand
         $this->client = $client;
     }
 
-    public function getList()
+    public function getList($page = null)
     {
         $t = new PrototypeTransformer();
-
+        
         $data = $this->client->get('prototypes')['data'];
         if (!is_array($data)) {
             return [];

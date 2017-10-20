@@ -22,11 +22,17 @@ class SiteCommand
         $this->client = $client;
     }
 
-    public function getList()
+    public function getList($page = null)
     {
         $t = new SiteTransformer();
 
-        $data = $this->client->get('sites')['data'];
+        if ($page !== null) {
+            $endpoint = 'sites/' . $page;
+        } else {
+            $endpoint = 'sites';
+        }
+
+        $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {
             return [];
         }
