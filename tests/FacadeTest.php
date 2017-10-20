@@ -16,6 +16,13 @@ class FacadeTest extends TestCase
         $this->assertInstanceOf(SiteDTO::class, $list[0]);
     }
 
+    public function testSiteListWithPage()
+    {
+        $facade = new Facade('http://symfony4.app/api/v1', '222');
+        $list = $facade->sites()->getList(1);
+        $this->assertInstanceOf(SiteDTO::class, $list[0]);
+    }
+
     public function testPrototypeList()
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
