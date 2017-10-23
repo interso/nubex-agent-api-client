@@ -23,11 +23,25 @@ class FacadeTest extends TestCase
         $this->assertInstanceOf(SiteDTO::class, $list[0]);
     }
 
+    public function testSiteListWithFilter()
+    {
+        $facade = new Facade('http://symfony4.app/api/v1', '222');
+        $list = $facade->sites()->getList(null, 'created');
+        $this->assertEquals('created', $list[0]->getState());
+    }
+
     public function testPrototypeList()
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
         $list = $facade->prototypes()->getList();
         $this->assertInstanceOf(PrototypeDTO::class, $list[0]);
+    }
+
+    public function testPrototypeListWithFilter()
+    {
+        $facade = new Facade('http://symfony4.app/api/v1', '222');
+        $list = $facade->prototypes()->getList(null, 'created');
+        $this->assertEquals('created', $list[0]->getState());
     }
 }
 

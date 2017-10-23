@@ -22,11 +22,14 @@ class PrototypeCommand
         $this->client = $client;
     }
 
-    public function getList($page = null)
+    public function getList($page = null, $filter = null)
     {
         $t = new PrototypeTransformer();
-        
-        $data = $this->client->get('prototypes')['data'];
+
+        $page ? $endpoint = 'prototypes/' . $page : $endpoint = 'prototypes';
+        $filter ? $endpoint .= '?filter=' . $filter : 0;
+
+        $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {
             return [];
         }
