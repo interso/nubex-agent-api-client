@@ -48,6 +48,8 @@ class FacadeTest extends TestCase
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
         $list = $facade->prototypes()->getList();
+
+        
         $this->assertInstanceOf(PrototypeDTO::class, $list[0]);
     }
 
