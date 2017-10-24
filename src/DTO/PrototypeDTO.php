@@ -25,6 +25,11 @@ class PrototypeDTO
     private $state;
 
     /**
+     * @var string
+     */
+    private $download;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -86,5 +91,21 @@ class PrototypeDTO
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDownload()
+    {
+        return $this->download;
+    }
+
+    /**
+     * @param string $download
+     */
+    public function setDownload($download)
+    {
+        $this->download = $download;
     }
 }

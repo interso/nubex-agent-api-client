@@ -13,6 +13,11 @@ class SiteCommand
     private $client;
 
     /**
+     * @var SiteTransformer
+     */
+    private $transformer;
+
+    /**
      * SiteCommand constructor.
      *
      * @param Client $client
@@ -20,12 +25,11 @@ class SiteCommand
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->transformer = new SiteTransformer();
     }
 
     public function getList($page = null, $filter = null)
     {
-        $t = new SiteTransformer();
-
         $page ? $endpoint = 'sites/' . $page : $endpoint = 'sites';
         $filter ? $endpoint .= '?filter=' . $filter : 0;
 
@@ -34,8 +38,34 @@ class SiteCommand
             return [];
         }
 
-        return array_map(function ($datum) use (&$t) {
-            return $t->transform($datum);
+        return array_map(function ($datum) {
+            return $this->transformer->transform($datum);
         }, $data);
+    }
+
+    public function get($code)
+    {
+        $endpoint = 'site/' . $code;
+
+        $data = $this->client->get($endpoint)['data'];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return array_map(function ($datum) {
+            return $this->transformer->transform($datum);
+        }, $data);
+    }
+
+    public function getState($code)
+    {
+        $endpoint = 'site/' . $code . '/status';
+
+        $data = $this->client->get($endpoint)['data'];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return $data;
     }
 }
