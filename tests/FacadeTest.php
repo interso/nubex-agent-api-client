@@ -30,6 +30,20 @@ class FacadeTest extends TestCase
         $this->assertEquals('created', $list[0]->getState());
     }
 
+    public function testSiteGet()
+    {
+        $facade = new Facade('http://symfony4.app/api/v1', '222');
+        $list = $facade->sites()->get(1);
+        $this->assertInstanceOf(SiteDTO::class, $list[0]);
+    }
+
+    public function testSiteGetState()
+    {
+        $facade = new Facade('http://symfony4.app/api/v1', '222');
+        $state = $facade->sites()->getState(1);
+        $this->assertEquals(['state' => 'new'], $state);
+    }
+
     public function testPrototypeList()
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
@@ -43,5 +57,12 @@ class FacadeTest extends TestCase
         $list = $facade->prototypes()->getList(null, 'created');
         $this->assertEquals('created', $list[0]->getState());
     }
+
+//    public function testPrototypeDownload()
+//    {
+//        $facade = new Facade('http://symfony4.app/api/v1', '222');
+//        $proto = $facade->prototypes()->download(1);
+//        $this->assertNotEquals(null, $proto);
+//    }
 }
 

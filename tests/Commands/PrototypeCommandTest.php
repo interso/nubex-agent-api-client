@@ -37,6 +37,7 @@ class PrototypeCommandTest extends TestCase
             'code' => 2,
             'site' => 1,
             'state' => 'new',
+            'download' => 'url'
         ];
 
         $this->client = $this->createMock(Client::class);
@@ -54,6 +55,7 @@ class PrototypeCommandTest extends TestCase
         $dto->setCode(2);
         $dto->setSite(1);
         $dto->setState('new');
+        $dto->setDownload('url');
 
         $this->assertEquals($dto, $this->protoCommand->getList()[0]);
     }
