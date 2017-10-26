@@ -15,6 +15,7 @@ class PrototypeTransformer
         $proto->setSite($data['site']);
         $proto->setState($data['state']);
         $proto->setDownload($data['download']);
+        $proto->setMd5($data['md5']);
 
         return $proto;
     }

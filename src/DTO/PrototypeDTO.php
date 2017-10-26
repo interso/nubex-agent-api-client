@@ -10,7 +10,7 @@ class PrototypeDTO
     private $id;
 
     /**
-     * @var integer
+     * @var string
      */
     private $code;
 
@@ -28,6 +28,11 @@ class PrototypeDTO
      * @var string
      */
     private $download;
+
+    /**
+     * @var string
+     */
+    private $md5;
 
     /**
      * @return integer
@@ -107,5 +112,21 @@ class PrototypeDTO
     public function setDownload($download)
     {
         $this->download = $download;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMd5()
+    {
+        return $this->md5;
+    }
+
+    /**
+     * @param string $md5
+     */
+    public function setMd5($md5)
+    {
+        $this->md5 = $md5;
     }
 }
