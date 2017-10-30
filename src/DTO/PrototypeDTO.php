@@ -27,7 +27,7 @@ class PrototypeDTO
     /**
      * @var string
      */
-    private $download;
+    private $url;
 
     /**
      * @var string
@@ -101,17 +101,17 @@ class PrototypeDTO
     /**
      * @return string
      */
-    public function getDownload()
+    public function getUrl()
     {
-        return $this->download;
+        return $this->url;
     }
 
     /**
-     * @param string $download
+     * @param string $url
      */
-    public function setDownload($download)
+    public function setUrl($url)
     {
-        $this->download = $download;
+        $this->url = $url;
     }
 
     /**

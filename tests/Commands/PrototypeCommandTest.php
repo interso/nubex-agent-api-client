@@ -37,7 +37,7 @@ class PrototypeCommandTest extends TestCase
             'code' => 2,
             'site' => 1,
             'state' => 'new',
-            'download' => 'url',
+            'url' => 'url',
             'md5' => '5',
         ];
 
@@ -56,7 +56,7 @@ class PrototypeCommandTest extends TestCase
         $dto->setCode(2);
         $dto->setSite(1);
         $dto->setState('new');
-        $dto->setDownload('url');
+        $dto->setUrl('url');
         $dto->setMd5('5');
 
         $this->assertEquals($dto, $this->protoCommand->getList()[0]);

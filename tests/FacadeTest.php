@@ -33,15 +33,15 @@ class FacadeTest extends TestCase
     public function testSiteGet()
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
-        $list = $facade->sites()->get(1);
+        $list = $facade->sites()->get('first_site');
         $this->assertInstanceOf(SiteDTO::class, $list[0]);
     }
 
     public function testSiteGetState()
     {
         $facade = new Facade('http://symfony4.app/api/v1', '222');
-        $state = $facade->sites()->getState(1);
-        $this->assertEquals(['state' => 'new'], $state);
+        $state = $facade->sites()->getState('first_site');
+        $this->assertEquals(['state' => 'created'], $state);
     }
 
     public function testPrototypeList()
