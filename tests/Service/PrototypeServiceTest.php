@@ -3,33 +3,26 @@
 namespace Interso\Tests\Commands;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\Command\PrototypeCommand;
+use Interso\NubexAgentAPI\Service\PrototypeService;
 use Interso\NubexAgentAPI\DTO\PrototypeDTO;
+
 use PHPUnit\Framework\TestCase;
 
-class PrototypeCommandTest extends TestCase
+class PrototypeServiceTest extends TestCase
 {
-    /**
-     * @var Client
-     */
+    /** @var Client */
     protected $client;
 
-    /**
-     * @var PrototypeCommand
-     */
+    /** @var PrototypeService */
     protected $protoCommand;
 
-    /**
-     * Tear down settings
-     */
+    /** Tear down settings */
     protected function tearDown()
     {
         $this->protoCommand = NULL;
     }
 
-    /**
-     * Set up settings
-     */
+    /** Set up settings */
     protected function setUp()
     {
         $data['data'][0] = [
@@ -46,7 +39,7 @@ class PrototypeCommandTest extends TestCase
             ->method('get')
             ->will($this->returnValue($data));
 
-        $this->protoCommand = new PrototypeCommand($this->client);
+        $this->protoCommand = new PrototypeService($this->client);
     }
 
     public function testGetList()

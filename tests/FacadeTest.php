@@ -11,7 +11,7 @@ class FacadeTest extends TestCase
 {
     protected function getUrl()
     {
-        return 'http://nubex-agent-api.app/api/v1';
+        return 'http://localhost:8020/api/v1';
     }
 
     protected function getApiKey()
@@ -33,34 +33,34 @@ class FacadeTest extends TestCase
         $this->assertInstanceOf(SiteDTO::class, $list[0]);
     }
 
-    public function testSiteListWithFilter()
-    {
-        $facade = new Facade($this->getUrl(), $this->getApiKey());
-        $list = $facade->sites()->getList(null, 'created');
-        $this->assertEquals('created', $list[0]->getState());
-    }
+//    public function testSiteListWithFilter()
+//    {
+//        $facade = new Facade($this->getUrl(), $this->getApiKey());
+//        $list = $facade->sites()->getList(null, 'published');
+//        $this->assertEquals('created', $list[0]->getState());
+//    }
 
-    public function testSiteGet()
-    {
-        $facade = new Facade($this->getUrl(), $this->getApiKey());
-        $list = $facade->sites()->get('first_site');
-        $this->assertInstanceOf(SiteDTO::class, $list[0]);
-    }
+//    public function testSiteGet()
+//    {
+//        $facade = new Facade($this->getUrl(), $this->getApiKey());
+//        $list = $facade->sites()->get('first_site');
+//        $this->assertInstanceOf(SiteDTO::class, $list[0]);
+//    }
 
-    public function testSiteGetState()
-    {
-        $facade = new Facade($this->getUrl(), $this->getApiKey());
-        $state = $facade->sites()->getState('first_site');
-        $this->assertEquals(['state' => 'created'], $state);
-    }
+//    public function testSiteGetState()
+//    {
+//        $facade = new Facade($this->getUrl(), $this->getApiKey());
+//        $state = $facade->sites()->getState('first_site');
+//        $this->assertEquals(['state' => 'created'], $state);
+//    }
 
-    public function testPrototypeList()
-    {
-        $facade = new Facade($this->getUrl(), $this->getApiKey());
-        $list = $facade->prototypes()->getList();
-
-        $this->assertInstanceOf(PrototypeDTO::class, $list[0]);
-    }
+//    public function testPrototypeList()
+//    {
+//        $facade = new Facade($this->getUrl(), $this->getApiKey());
+//        $list = $facade->prototypes()->getList();
+//
+//        $this->assertInstanceOf(PrototypeDTO::class, $list[0]);
+//    }
 
 //    public function testPrototypeListWithFilter()
 //    {

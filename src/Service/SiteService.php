@@ -1,26 +1,21 @@
 <?php
 
-namespace Interso\NubexAgentAPI\Command;
+namespace Interso\NubexAgentAPI\Service;
 
 use Interso\NubexAgentAPI\Client;
 use Interso\NubexAgentAPI\DTO\SiteDTO;
 use Interso\NubexAgentAPI\Transformer\SiteTransformer;
 
-class SiteCommand
+class SiteService
 {
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client;
 
-    /**
-     * @var SiteTransformer
-     */
+    /** @var SiteTransformer */
     private $transformer;
 
     /**
      * SiteCommand constructor.
-     *
      * @param Client $client
      */
     public function __construct(Client $client)
@@ -30,35 +25,20 @@ class SiteCommand
     }
 
     /**
-     * @param null $page
-     * @param null $filter
+     * @param string $page
+     * @param string $filter
      * @return SiteDTO[]
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getList($page = null, $filter = null)
     {
-        $page ? $endpoint = 'sites/' . $page : $endpoint = 'sites';
-        $filter ? $endpoint .= '?filter=' . $filter : 0;
+        $page
+            ? $endpoint = sprintf('sites/%s', $page)
+            : $endpoint = 'sites';
 
-        $data = $this->client->get($endpoint);
-        $data = $data['data'];
-        if (!is_array($data)) {
-            return [];
-        }
-
-        return array_map(function ($datum) {
-            return $this->transformer->transform($datum);
-        }, $data);
-    }
-
-    /**
-     * @param $code
-     * @return SiteDTO[]
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function get($code)
-    {
-        $endpoint = 'site/' . $code;
+        $filter
+            ? $endpoint = sprintf('%s?filter=%s', $endpoint, $filter)
+            : null;
 
         $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {
@@ -71,13 +51,32 @@ class SiteCommand
     }
 
     /**
-     * @param $code
+     * @param string $code
+     * @return SiteDTO[]
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function get($code)
+    {
+        $endpoint = sprintf('site/%s', $code);
+
+        $data = $this->client->get($endpoint)['data'];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        return array_map(function ($datum) {
+            return $this->transformer->transform($datum);
+        }, $data);
+    }
+
+    /**
+     * @param string $code
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getState($code)
     {
-        $endpoint = 'site/' . $code . '/status';
+        $endpoint = sprintf('site/%s/status', $code);
 
         $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {

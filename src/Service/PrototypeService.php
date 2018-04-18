@@ -1,11 +1,11 @@
 <?php
 
-namespace Interso\NubexAgentAPI\Command;
+namespace Interso\NubexAgentAPI\Service;
 
 use Interso\NubexAgentAPI\Client;
 use Interso\NubexAgentAPI\Transformer\PrototypeTransformer;
 
-class PrototypeCommand
+class PrototypeService
 {
     /**
      * @var Client
@@ -30,8 +30,13 @@ class PrototypeCommand
 
     public function getList($page = null, $filter = null)
     {
-        $page ? $endpoint = 'prototypes/' . $page : $endpoint = 'prototypes';
-        $filter ? $endpoint .= '?filter=' . $filter : 0;
+        $page
+            ? $endpoint = sprintf('prototypes/%s', $page)
+            : $endpoint = 'prototypes';
+
+        $filter
+            ? $endpoint = sprintf('%s?filter=%s', $endpoint, $filter)
+            : null;
 
         $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {
@@ -45,7 +50,7 @@ class PrototypeCommand
 
     public function get($code)
     {
-        $endpoint = 'prototype/' . $code;
+        $endpoint = sprintf('prototype/%s', $code);
 
         $data = $this->client->get($endpoint)['data'];
         if (!is_array($data)) {

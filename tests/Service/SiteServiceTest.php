@@ -3,11 +3,11 @@
 namespace Interso\Tests\Commands;
 
 use Interso\NubexAgentAPI\Client;
-use Interso\NubexAgentAPI\Command\SiteCommand;
+use Interso\NubexAgentAPI\Service\SiteService;
 use Interso\NubexAgentAPI\DTO\SiteDTO;
 use PHPUnit\Framework\TestCase;
 
-class SiteCommandTest extends TestCase
+class SiteServiceTest extends TestCase
 {
     /**
      * @var Client
@@ -15,7 +15,7 @@ class SiteCommandTest extends TestCase
     protected $client;
 
     /**
-     * @var SiteCommand
+     * @var SiteService
      */
     protected $siteCommand;
 
@@ -44,7 +44,7 @@ class SiteCommandTest extends TestCase
             ->method('get')
             ->will($this->returnValue($data));
 
-        $this->siteCommand = new SiteCommand($this->client);
+        $this->siteCommand = new SiteService($this->client);
     }
 
     public function testGetList()
