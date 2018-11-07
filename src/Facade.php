@@ -19,10 +19,10 @@ class Facade
     protected $client;
 
     /** @var SiteService */
-    protected $siteCommand;
+    protected $siteService;
 
     /** @var PrototypeService */
-    protected $prototypeCommand;
+    protected $prototypeService;
 
     /**
      * Facade constructor.
@@ -35,8 +35,8 @@ class Facade
         $httpClient = new HttpClient();
         $client = new Client($apiUrl, $apiKey, $httpClient);
 
-        $this->siteCommand      = new SiteService($client);
-        $this->prototypeCommand = new PrototypeService($client);
+        $this->siteService      = new SiteService($client);
+        $this->prototypeService = new PrototypeService($client);
     }
 
     /**
@@ -44,7 +44,7 @@ class Facade
      */
     public function sites()
     {
-        return $this->siteCommand;
+        return $this->siteService;
     }
 
     /**
@@ -52,6 +52,6 @@ class Facade
      */
     public function prototypes()
     {
-        return $this->prototypeCommand;
+        return $this->prototypeService;
     }
 }

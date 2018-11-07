@@ -2,7 +2,9 @@
 
 namespace Interso\NubexAgentAPI\Service;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Interso\NubexAgentAPI\Client;
+use Interso\NubexAgentAPI\DTO\PrototypeDTO;
 use Interso\NubexAgentAPI\Transformer\PrototypeTransformer;
 
 class PrototypeService
@@ -28,6 +30,12 @@ class PrototypeService
         $this->transformer = new PrototypeTransformer();
     }
 
+    /**
+     * @param int    $page
+     * @param string $filter
+     * @return array
+     * @throws GuzzleException
+     */
     public function getList($page = null, $filter = null)
     {
         $page
@@ -38,27 +46,61 @@ class PrototypeService
             ? $endpoint = sprintf('%s?filter=%s', $endpoint, $filter)
             : null;
 
-        $data = $this->client->get($endpoint)['data'];
-        if (!is_array($data)) {
+        $result = $this->client->get($endpoint);
+        if (!$result || !isset($result['data']) || !is_array($result['data'])) {
             return [];
         }
 
         return array_map(function ($datum) {
             return $this->transformer->transform($datum);
-        }, $data);
+        }, $result['data']);
     }
 
+    /**
+     * @param string $code
+     * @return PrototypeDTO|null
+     * @throws GuzzleException
+     */
     public function get($code)
     {
         $endpoint = sprintf('prototype/%s', $code);
 
-        $data = $this->client->get($endpoint)['data'];
-        if (!is_array($data)) {
-            return [];
+        $result = $this->client->get($endpoint);
+        if (!$result || !isset($result['data'][0])) {
+            return null;
         }
 
-        return array_map(function ($datum) {
-            return $this->transformer->transform($datum);
-        }, $data);
+        $data = $result['data'][0];
+        return $this->transformer->transform($data);
+    }
+
+    /**
+     * @param string $code
+     * @return string|null
+     * @throws GuzzleException
+     */
+    public function getUrl($code)
+    {
+        $proto = $this->get($code);
+        if (!$proto) {
+            return null;
+        }
+
+        return $proto->getUrl();
+    }
+
+    /**
+     * @param string $code
+     * @return null|string
+     * @throws GuzzleException
+     */
+    public function getFullUrl($code)
+    {
+        $url = $this->getUrl($code);
+        if (!$url) {
+            return null;
+        }
+
+        return sprintf('%s%s', $this->client->getBaseUrl(), $url);
     }
 }

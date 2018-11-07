@@ -181,4 +181,17 @@ class Client
     {
         return $this->query($this->prepareUri($endpoint), $params, self::METHOD_DELETE);
     }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        $len = strlen($this->baseUrl);
+        if ('/' === $this->baseUrl[$len - 1]) {
+            return substr($this->baseUrl, 0, $len - 2);
+        }
+
+        return $this->baseUrl;
+    }
 }

@@ -40,49 +40,48 @@ class SiteService
             ? $endpoint = sprintf('%s?filter=%s', $endpoint, $filter)
             : null;
 
-        $data = $this->client->get($endpoint)['data'];
-        if (!is_array($data)) {
+        $result = $this->client->get($endpoint);
+        if (!$result || !isset($result['data']) || !is_array($result['data'])) {
             return [];
         }
 
         return array_map(function ($datum) {
             return $this->transformer->transform($datum);
-        }, $data);
+        }, $result['data']);
     }
 
     /**
      * @param string $code
-     * @return SiteDTO[]
+     * @return SiteDTO
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($code)
     {
         $endpoint = sprintf('site/%s', $code);
 
-        $data = $this->client->get($endpoint)['data'];
-        if (!is_array($data)) {
-            return [];
+        $result = $this->client->get($endpoint);
+        if (!$result || !isset($result['data'][0])) {
+            return null;
         }
 
-        return array_map(function ($datum) {
-            return $this->transformer->transform($datum);
-        }, $data);
+        $data = $result['data'][0];
+        return $this->transformer->transform($data);
     }
 
-    /**
-     * @param string $code
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function getState($code)
-    {
-        $endpoint = sprintf('site/%s/status', $code);
-
-        $data = $this->client->get($endpoint)['data'];
-        if (!is_array($data)) {
-            return [];
-        }
-
-        return $data;
-    }
+//    /**
+//     * @param string $code
+//     * @return array
+//     * @throws \GuzzleHttp\Exception\GuzzleException
+//     */
+//    public function getState($code)
+//    {
+//        $endpoint = sprintf('site/%s/status', $code);
+//
+//        $data = $this->client->get($endpoint)['data'];
+//        if (!is_array($data)) {
+//            return [];
+//        }
+//
+//        return $data;
+//    }
 }
