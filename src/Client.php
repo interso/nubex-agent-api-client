@@ -97,7 +97,7 @@ class Client
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      */
-    protected function query($uri, array $params = [], $method = self::METHOD_POST)
+    protected function query($uri, array $params = [], $method = self::METHOD_GET)
     {
         $headers = [
             'Content-Type' => 'application/json',
@@ -115,7 +115,7 @@ class Client
 
             return $result;
         } catch (\Exception $exception) {
-            $result = ['success' => false, 'exception' => $exception];
+            $result = ['success' => false, 'exception' => $exception->getMessage()];
             return $result;
         }
 
